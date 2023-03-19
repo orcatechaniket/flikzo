@@ -3,13 +3,17 @@ import { toast } from "react-toastify";
 import { createCategory } from "../../function/category";
 const AddCategory = () => {
   const [category, setCategory] = useState("");
- 
+  const [image, setImage] = useState([]);
+  const onInputChange = (e) => {
+    setImage(e.target.files[0]);
+  };
  
   const onSubmit = () => {
-    const data = {
-      name : category
-    }
-    createCategory(data).then((res) => {
+   
+    const formData = new FormData();
+    formData.append("name", category);
+    formData.append("image", image);
+    createCategory(formData).then((res) => {
       toast.success(res.data)
     }).catch((err) => {
       toast.error(err.response.data.message)
@@ -56,7 +60,16 @@ const AddCategory = () => {
                     }
                   />
                 </div>
-                
+                <div class="form-group">
+          <label htmlFor="images">Images:</label>
+          <input
+            type="file"
+            id="images"
+            className="form-control"
+            name="images"
+            onChange={onInputChange}
+          />
+        </div>
               </form>
               <button onClick={onSubmit} type="button" className="btn btn-primary mt-3">
               Submit
