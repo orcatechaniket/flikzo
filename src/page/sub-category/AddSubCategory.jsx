@@ -8,19 +8,25 @@ const AddSubCategory = () => {
     category: "",
     description: "",
   });
+  const [image, setImage] = useState([]);
+  const onInputChange = (e) => {
+    setImage(e.target.files[0]);
+  };
   const onSubmit = (e) => {
-    e.preventDefault()
-    console.log(subcategory);
-    const data ={ 
-      name : subcategory.name,
-      category : subcategory.category,
-      description : subcategory.description
-    }
-  createSubCategory(data).then((res) => {
-    toast.success(`${subcategory.name} is created`)
-  }).catch((err) => {
-    toast.error(`${err}`)
-  })
+    e.preventDefault();
+    console.log(image);
+    const formData = new FormData();
+    formData.append("name", subcategory.name);
+    formData.append("image", image);
+    formData.append("category", subcategory.category);
+    formData.append("description", subcategory.description);
+    createSubCategory(formData)
+      .then((res) => {
+        toast.success(`${subcategory.name} is created`);
+      })
+      .catch((err) => {
+        toast.error(`${err}`);
+      });
   };
 
   const [category, setCategory] = useState([]);
@@ -49,7 +55,7 @@ const AddSubCategory = () => {
               Add Sub Category
             </h1>
             <button
-             onClick={() => window.location.reload()}
+              onClick={() => window.location.reload()}
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
@@ -70,7 +76,7 @@ const AddSubCategory = () => {
                     }
                     class="form-select"
                   >
-                  <option>jgsdj</option>
+                    <option>Add category</option>
                     {category.map((data) => (
                       <option value={data._id}>{data.name}</option>
                     ))}
@@ -107,15 +113,29 @@ const AddSubCategory = () => {
                     }
                   />
                 </div>
+                <div class="form-group">
+                  <label htmlFor="images">Images:</label>
+                  <input
+                    type="file"
+                    id="images"
+                    className="form-control"
+                    name="images"
+                    onChange={onInputChange}
+                  />
+                </div>
               </form>
-              <button onClick={onSubmit} type="button" class="btn btn-primary mt-4">
-              Save changes
-            </button>
+              <button
+                onClick={onSubmit}
+                type="button"
+                class="btn btn-primary mt-4"
+              >
+                Save changes
+              </button>
             </div>
           </div>
           <div class="modal-footer">
             <button
-             onClick={() => window.location.reload()}
+              onClick={() => window.location.reload()}
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
