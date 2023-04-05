@@ -13,6 +13,7 @@ const Table = () => {
     "Order-Rejected",
     "Out-For-Delivery",
     "Delivered",
+    "Order Cancelled"
   ];
   const [viewdata, setViewdata] = useState({});
   const [updata, setUpdata] = useState({});
