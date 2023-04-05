@@ -24,6 +24,11 @@ const Tabs = () => {
             Order Accepted
           </a>
         </li>
+         <li class="nav-item" onClick={() => setVal(5)}>
+          <a class={`nav-link ${val === 5 ? "active" : ""}`} href="#">
+            Order Cancelled
+          </a>
+        </li>
         <li class="nav-item" onClick={() => setVal(2)}>
           <a class={`nav-link ${val === 2 ? "active" : ""}`} href="#">
             Order Rejected
