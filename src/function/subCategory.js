@@ -1,5 +1,5 @@
 import axios from "axios";
-const API = "http://localhost:8000/api/subcategory";
+const API = "https://www.flikzo.in/api/subcategory";
 
 export const createSubCategory = async (data) => {
   return await axios.post(`${API}`, data);
