@@ -15,6 +15,7 @@ const ListProduct = () => {
       .then((res) => {
         setLoading(false)
         seProducts(res.data.products);
+        setFilteredProduct(res.data.products)
       })
       .catch((err) => {
         setLoading(false)
@@ -36,10 +37,33 @@ const ListProduct = () => {
   useEffect(() => {
     getAllProduct();
   }, []);
+  const [filteredProduct , setFilteredProduct] = useState(products);
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    if (products.length > 0) {
+      const filtered = products?.filter(
+        (product) =>
+          product?.name?.toLowerCase().includes(query)
+      );
+      setFilteredProduct(filtered);
+    }
+  };
+
+
   return (
     <div className="table-responsive">
      {loading ? <LoadingSpinner/> : <>
+     <div className="input-group m-3" >
+        <input
+          type="text"
+          className="form-control w-25"
+          
+          placeholder="Enter product Name..."
+          onChange={handleSearch}
+        />
+      </div>
       <table class="table">
+    
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -55,7 +79,7 @@ const ListProduct = () => {
         </thead>
         <tbody>
        
-          {products.map((data, idx) => (
+          {filteredProduct.map((data, idx) => (
             <tr>
               <th scope="row">{idx + 1}</th>
               <td>{data.name}</td>
